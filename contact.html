@@ -8,68 +8,124 @@
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
   </head>
   <body>
+    <!--Header ekle-->
     <h1>İletişim Sayfası</h1>
-    <p>form elemanları içeren bir iletişim sayfası yap. sayfa tüm form elemanlarını içermeli. </p>
     <form name="contact" method="post" action="contact.php">
       <fieldset>
         <legend>Kişisel Bilgiler</legend>
-        <label for="isim_ad">Adınız: </label>
-        <input type="text" name="isim_ad" required>
-        <br>
-        <label for="isim_soyad">Soyadınız: </label>
-        <input type="text" name="isim_soyad" required>
-        <br>
-        <label for="email">E-Posta Adresiniz: </label>
-        <input type="text" name="email" required>
-        <br>
-        <label for="tel_no">Telefon Numaranız: </label>
-        <input type="text" name="tel_no">
-        <br>
-        <label for="egitim">Eğitim Seviyeniz: </label>
-        <input type="radio" name="egitim" value="Lise">Lise
-        <input type="radio" name="egitim" value="Üniversite">Üniversite
-        <input type="radio" name="egitim" value="Mezun">Mezun 
-        <br>
-        <label for="universite">Üniversiteniz: </label>
-        <input type="text" name="universite" list="universiteler">
-        <datalist id="universiteler">
-          <option value="ODTÜ">ODTÜ</option>
-          <option value="Boğaziçi Üniversitesi">Boğaziçi Üniversitesi</option>
-          <option value="İTÜ">İstanbul Üniversitesi</option>
-          <option value="Haccettepe Üniversitesi">Haccettepe Üniversitesi</option>
-          <option value="Ankara Üniversitesi">Ankara Üniversitesi</option>
-        </datalist>
-        <br>
-        <label for="ilgi_alanlari[]">İlgi Alanlarınız: </label>
-        <input type="checkbox" name="ilgi_alanlari[]" value="Siber Güvenlik">Siber Güvenlik
-        <input type="checkbox" name="ilgi_alanlari[]" value="Front End Coding">Front End Coding
-        <input type="checkbox" name="ilgi_alanlari[]" value="Back End Coding">Back End Coding
-        <br>
-        <label for="calisma_alani">Çalışma Alanınız: </label>
-        <select name="calisma_alani">
-          <optgroup label="Siber">
-            <option value="red_team">Red Team</option>
-            <option value="blue_team">Blue Team</option>
-            <option value="devsecops">DevSecOps</option>
-          </optgroup>
-          <optgroup label="Sayısal">
-            <option value="bilgisayar">Bilgisayar Mühendisliği</option>
-            <option value="elektrik">Elektrik-Elektronik Mühendisliği</option>
-          </optgroup>
-          <optgroup label="Sözel">
-            <option value="ekonomi">Ekonomi ve Finans</option>
-            <option value="saglik">Sağlık Endüstrisi</option>
-          </optgroup>
-        </select>
-        <br>
-        <label for="konu">Mesajınızın Konusu:</label>
-        <input type="text" name="konu">
-        <br>
-        <label for="mesaj" required>Mesajınız: </label>
-        <textarea name="mesaj" style="width: 100%;"></textarea>
-        <br>
-        <input type="reset" value="Temizle">
-        <input type="submit" value="Gönder">
+        <table class="table table-bordered">
+          <tr>
+            <td>
+              <label for="isim_ad">Adınız: </label>
+            </td>
+            <td>
+              <input type="text" name="isim_ad" required>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <label for="isim_soyad">Soyadınız: </label>
+            </td>
+            <td>
+              <input type="text" name="isim_soyad" required>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <label for="email">E-Posta Adresiniz: </label>
+            </td>
+            <td>
+              <input type="text" name="email" required>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <label for="tel_no">Telefon Numaranız: </label>
+            </td>
+            <td>
+              <input type="text" name="tel_no">
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <label for="egitim">Eğitim Seviyeniz: </label>
+            </td>
+            <td>
+              <input type="radio" name="egitim" value="Lise">Lise
+              <input type="radio" name="egitim" value="Üniversite">Üniversite
+              <input type="radio" name="egitim" value="Mezun">Mezun 
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <label for="universite">Üniversiteniz: </label>
+            </td>
+            <td>
+              <input type="text" name="universite" list="universiteler">
+              <datalist id="universiteler">
+                <option value="ODTÜ">ODTÜ</option>
+                <option value="Boğaziçi Üniversitesi">Boğaziçi Üniversitesi</option>
+                <option value="İTÜ">İstanbul Üniversitesi</option>
+                <option value="Haccettepe Üniversitesi">Haccettepe Üniversitesi</option>
+                <option value="Ankara Üniversitesi">Ankara Üniversitesi</option>
+              </datalist>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <label for="ilgi_alanlari[]">İlgi Alanlarınız: </label>
+            </td>
+            <td>
+              <input type="checkbox" name="ilgi_alanlari[]" value="Siber Güvenlik">Siber Güvenlik
+              <input type="checkbox" name="ilgi_alanlari[]" value="Front End Coding">Front End Coding
+              <input type="checkbox" name="ilgi_alanlari[]" value="Back End Coding">Back End Coding
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <label for="calisma_alani">Çalışma Alanınız: </label>
+            </td>
+            <td>
+              <select name="calisma_alani">
+                <optgroup label="Siber">
+                  <option value="red_team">Red Team</option>
+                  <option value="blue_team">Blue Team</option>
+                  <option value="devsecops">DevSecOps</option>
+                </optgroup>
+                <optgroup label="Sayısal">
+                  <option value="bilgisayar">Bilgisayar Mühendisliği</option>
+                  <option value="elektrik">Elektrik-Elektronik Mühendisliği</option>
+                </optgroup>
+                <optgroup label="Sözel">
+                  <option value="ekonomi">Ekonomi ve Finans</option>
+                  <option value="saglik">Sağlık Endüstrisi</option>
+                </optgroup>
+              </select>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <label for="konu">Mesajınızın Konusu:</label>
+            </td>
+            <td>
+              <input type="text" name="konu">
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <label for="mesaj" required>Mesajınız: </label>
+            </td>
+            <td>
+              <textarea name="mesaj" style="width: 100%;"></textarea>
+            </td>
+          </tr>
+          <tr>
+            <td colspan="2">
+              <input type="reset" value="Temizle">
+              <input type="submit" value="Gönder">
+            </td>
+          </tr> 
+        </table>  
       </fieldset>
     </form>
   </body>
