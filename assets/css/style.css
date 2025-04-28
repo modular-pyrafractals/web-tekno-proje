@@ -1,0 +1,16 @@
+.fix-margin-left-5 {
+  margin-left: 5px !important;
+}
+.fix-margin-left-10 {
+  margin-left: 10px !important;
+}
+.fix-margin-right-5 {
+  margin-right: 5px !important;
+}
+.fix-margin-right-10 {
+  margin-right: 10px !important;
+}
+textarea {
+  width: 100% !important;
+}
+
