@@ -13,4 +13,9 @@
 textarea {
   width: 100% !important;
 }
+body.bg-body-dark {
+  background-color: #1c1c1c !important;
+  color: #eaeaea !important;
+}
+
 
