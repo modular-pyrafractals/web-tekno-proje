@@ -31,220 +31,122 @@
         <li class="nav-item"><a href="login.html" class="nav-link active bg-success">Giriş Yap</a></li>
       </ul>
     </nav>
-    <hr>
-    <!--Header ekle-->
-    <h1>İletişim Sayfası</h1>
-    <div id="app" class="text-white bg-black">
-      <form 
-        id="contact" 
-        @submit.prevent="checkForm"
-        method="post" 
-        action="process.php"
-      >
-        <fieldset class="bg-black text-white">
-          <legend>Kişisel Bilgiler</legend>
-          <table class="table table-bordered">
-            <tr v-if="errors.length">
-              <td colspan="2">
-                <p v-if="errors.length">
-                  <b>Lütfen şu hataları düzeltin:</b>
-                  <ul>
-                    <li v-for="error in errors">{{ error }}</li>
-                  </ul>
-                </p>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <label for="isim_ad">Adınız: </label>
-              </td>
-              <td>
-                <input 
-                  type="text" 
-                  id="isim_ad" 
-                  v-model="isim_ad" 
-                  name="isim_ad"
-                >
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <label for="isim_soyad">Soyadınız: </label>
-              </td>
-              <td>
-                <input 
-                  type="text" 
-                  name="isim_soyad"
-                  id="isim_soyad"
-                  v-model="isim_soyad"
-                >
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <label for="email">E-Posta Adresiniz: </label>
-              </td>
-              <td>
-                <input 
-                  type="text" 
-                  name="email"
-                  id="email"
-                  v-model="email"
-                >
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <label for="tel_no">Telefon Numaranız: </label>
-              </td>
-              <td>
-                <input 
-                  type="text" 
-                  name="tel_no"
-                  id="tel_no"
-                  v-model="tel_no"
-                >
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <label for="egitim">Eğitim Seviyeniz: </label>
-              </td>
-              <td>
-                <input type="radio" name="egitim" value="Lise">Lise
-                <input type="radio" name="egitim" value="Üniversite">Üniversite
-                <input type="radio" name="egitim" value="Mezun">Mezun 
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <label for="universite">Üniversiteniz: </label>
-              </td>
-              <td>
-                <input 
-                  type="text" 
-                  name="universite"
-                  id="universite"
-                  list="universiteler"
-                  v-model="universite"
-                >
-                <datalist id="universiteler">
-                  <option value="ODTÜ">ODTÜ</option>
-                  <option value="Boğaziçi Üniversitesi">Boğaziçi Üniversitesi</option>
-                  <option value="İTÜ">İstanbul Üniversitesi</option>
-                  <option value="Haccettepe Üniversitesi">Haccettepe Üniversitesi</option>
-                  <option value="Ankara Üniversitesi">Ankara Üniversitesi</option>
-                </datalist>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <label for="ilgi_alanlari[]">İlgi Alanlarınız: </label>
-              </td>
-              <td>
-                <input type="checkbox" name="ilgi_alanlari[]" value="Siber Güvenlik">Siber Güvenlik
-                <input type="checkbox" name="ilgi_alanlari[]" value="Front End Coding">Front End Coding
-                <input type="checkbox" name="ilgi_alanlari[]" value="Back End Coding">Back End Coding
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <label for="calisma_alani">Çalışma Alanınız: </label>
-              </td>
-              <td>
-                <select name="calisma_alani">
-                  <optgroup label="Siber">
-                    <option value="red_team">Red Team</option>
-                    <option value="blue_team">Blue Team</option>
-                    <option value="devsecops">DevSecOps</option>
-                  </optgroup>
-                  <optgroup label="Sayısal">
-                    <option value="bilgisayar">Bilgisayar Mühendisliği</option>
-                    <option value="elektrik">Elektrik-Elektronik Mühendisliği</option>
-                  </optgroup>
-                  <optgroup label="Sözel">
-                    <option value="ekonomi">Ekonomi ve Finans</option>
-                    <option value="saglik">Sağlık Endüstrisi</option>
-                  </optgroup>
-                </select>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <label for="konu">Mesajınızın Konusu:</label>
-              </td>
-              <td>
-                <input 
-                  type="text" 
-                  name="konu"
-                  id="konu"
-                  v-model="konu"
-                >
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <label for="mesaj" required>Mesajınız: </label>
-              </td>
-              <td>
-                <textarea 
-                  name="mesaj"
-                  id="mesaj"
-                  v-model="mesaj"
-                ></textarea>
-              </td>
-            </tr>
-            <tr>
-              <td colspan="2">
-                <input type="submit" value="Kontrol Et">
-                <input type="reset" value="Temizle">
-                <input type="submit" value="Gönder">
-              </td>
-            </tr> 
-          </table>  
-        </fieldset>
-      </form>
-    </div>
-    <script>
-      new Vue({
-        el: '#contact',
-        data: {
-          errors: [],
-          isim_ad: null,
-          isim_soyad: null,
-          email: null,
-          tel_no: null,
-          universite: null,
-          konu: null,
-          mesaj: null
-        },
-        methods:{
-          checkForm: function(e) {
-            if (this.isim_ad && this.isim_soyad && this.email && this.konu && this.mesaj) {
-              return true;
-            }
+    <div id="app" class="container py-5">
+    <h1 class="mb-4">İletişim Formu</h1>
+    <form id="contactForm" @submit.prevent="checkForm" method="post" action="process.php" ref="formRef">
+      <div class="mb-3">
+        <label for="isim_ad" class="form-label">Ad</label>
+        <input type="text" id="isim_ad" name="isim_ad" class="form-control" v-model="isim_ad">
+        <div v-if="!isNameValid" class="text-danger mt-1">İsim boş bırakılamaz.</div>
+      </div>
+      <div class="mb-3">
+        <label for="isim_soyad" class="form-label">Soyad</label>
+        <input type="text" id="isim_soyad" name="isim_soyad" class="form-control" v-model="isim_soyad">
+        <div v-if="!isNameValid" class="text-danger mt-1">İsim boş bırakılamaz.</div>
+      </div>
+      <div class="mb-3">
+        <label for="email" class="form-label">E-posta</label>
+        <input type="text" id="email" name="email" class="form-control" v-model="email">
+        <div v-if="!isEmailValid" class="text-danger mt-1">Geçerli bir e-posta giriniz.</div>
+      </div>
 
-            this.errors = [];
-            if (!this.isim_ad) {
-              this.errors.push('Lütfen adınızı giriniz.');
-            }
-            if (!this.isim_soyad) {
-              this.errors.push('Lütfen soyadınızı giriniz.');
-            }
-            if (!this.email) {
-              this.errors.push('Lütfen e-posta adresinizi giriniz.');
-            }
-            if (!this.konu) {
-              this.errors.push('Lütfen mesajınızın konusunu giriniz.');
-            }
-            if (!this.mesaj) {
-              this.errors.push('Lütfen mesajınızı giriniz.');
-            }
+      <div class="alert alert-danger" v-if="errorMessage">{{ errorMessage }}</div>
+      <div class="alert alert-success" v-if="responseMessage">{{ responseMessage }}</div>
 
-            e.preventDefault();
+      <div class="d-flex gap-3">
+        <input type="reset" value="Temizle">
+        <button type="submit" class="btn btn-info" onclick="validateFormJS()">JS Kontrol</button>
+        <button type="submit" class="btn btn-success" @click="checkForm">Vue Gönder</button>
+      </div>
+    </form>
+  </div>
+  <script>
+function validateFormJS() {
+  const adInput = document.getElementById('isim_ad');
+  const soyadInput = document.getElementById('isim_soyad');
+  const emailInput = document.getElementById('email');
+
+  let isValid = true;
+
+  adInput.classList.remove('is-invalid');
+  soyadInput.classList.remove('is-invalid');
+  emailInput.classList.remove('is-invalid');
+
+  if (adInput.value.trim() === '') {
+    adInput.classList.add('is-invalid');
+    isValid = false;
+  }
+  
+  if (soyadInput.value.trim() === '') {
+    soyadInput.classList.add('is-invalid');
+    isValid = false;
+  }
+
+  const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+  if (!emailRegex.test(emailInput.value.trim())) {
+    emailInput.classList.add('is-invalid');
+    isValid = false;
+  }
+
+  if (!isValid) {
+    alert('Bazı alanlar hatalı. Lütfen kontrol edin.');
+  } else {
+    alert('Form JS ile başarılı şekilde doğrulandı.');
+  }
+}
+</script>
+  <script>
+    const { createApp, ref } = Vue;
+
+    createApp({
+      setup() {
+        const isim_ad = ref('');
+        const isim_soyad = ref('');
+        const email = ref('');
+        const isNameValid = ref(true);
+        const isEmailValid = ref(true);
+        const errorMessage = ref('');
+        const responseMessage = ref('');
+        const formRef = ref(null);
+
+        const validateEmail = () => {
+          const eRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+          isEmailValid.value = eRegex.test(email.value);
+        };
+
+        const validateName = () => {
+          isNameValid.value = (isim_ad.value.trim().length > 0) && (isim_soyad.value.trim().length > 0);
+        };
+
+        const checkForm = () => {
+          validateName();
+          validateEmail();
+
+          if (!isNameValid.value || !isEmailValid.value) {
+            errorMessage.value = 'Geçersiz alanlar mevcut. Lütfen tekrar kontrol edin.';
+            responseMessage.value = '';
+            return;
           }
-        }
-      });
-    </script>
+
+          errorMessage.value = '';
+          responseMessage.value = 'Form başarıyla gönderildi.';
+          
+          formRef.value.submit();
+        };
+
+        return {
+          isim_ad,
+          isim_soyad,
+          email,
+          isNameValid,
+          isEmailValid,
+          errorMessage,
+          responseMessage,
+          checkForm,
+          formRef
+        };
+      }
+    }).mount('#app');
+  </script>
   </body>
 </html>
