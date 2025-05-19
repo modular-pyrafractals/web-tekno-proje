@@ -1,32 +1,33 @@
 <?php
 session_start();
+
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
   http_response_code(403);
-  die("Access denied.");
+  die("Yetkisiz erişim.");
 }
 
-//    if (!isset($_POST['csrf_token']) || !hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])) {
-//        http_response_code(403); // Forbidden
-//        die("Access denied.");
-//    }
+if (!isset($_POST['csrf_token']) || !hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])) {
+  http_response_code(403);
+  die("CSRF doğrulama hatası.");
+  error_log("CSRF doğrulama hatası.");
+}
+}
 
 $isim_ad = isset($_POST["isim_ad"]) ? htmlspecialchars($_POST["isim_ad"]) : 'Ad girilmedi.';
 $isim_soyad = isset($_POST["isim_soyad"]) ? htmlspecialchars($_POST["isim_soyad"]) : 'Soyad girilmedi.';
 $email = isset($_POST["email"]) ? htmlspecialchars($_POST["email"]) : 'Email girilmedi.';
 $tel_no = isset($_POST["tel_no"]) ? htmlspecialchars($_POST["tel_no"]): 'Telefon numarası girilmedi.';
-/*    $egitim = isset($_POST["egitim"]) ? htmlspecialchars($_POST["egitim"]): 'Eğitim seviyesi girilmedi.';
-    $universite = isset($_POST["universite"]) ? htmlspecialchars($_POST["universite"]) : 'Üniversite adı girilmedi.';
-    $konu = isset($_POST["konu"]) ? htmlspecialchars($_POST["konu"]) : "Konu belirtilmedi.";
-    $mesaj = isset($_POST["mesaj"]) ? htmlspecialchars($_POST["mesaj"]) : "Mesaj gönderilmedi.";
-    if(isset($_POST["ilgi_alanlari"])){
-      $str="";
-      foreach($_POST["ilgi_alanlari"] as $k){
-        $str.="$k, ";
-      }
-      $ilgi_alanlari = $str;
-    }
-    else{$ilgi_alanlari = "İlgi alanları belirtilmedi.";}
-      $calisma_alani = isset($_POST["calisma_alani"]) ? htmlspecialchars($_POST["calisma_alani"]) : "Çalışma alanı seçilmedi."; */ 
+$egitim = isset($_POST["egitim"]) ? htmlspecialchars($_POST["egitim"]): 'Eğitim seviyesi girilmedi.';
+$universite = isset($_POST["universite"]) ? htmlspecialchars($_POST["universite"]) : 'Üniversite adı girilmedi.';    
+if(isset($_POST["ilgi_alanlari"]) && is_array($_POST["ilgi_alanlari"])) {
+  $temiz_dizi = array_map('htmlspecialchars', $_POST["ilgi_alanlari"]);
+  $ilgi_alanlari = implode(", ", $temiz_dizi);
+} else {
+  $ilgi_alanlari = "İlgi alanları belirtilmedi.";
+}
+$calisma_alani = isset($_POST["calisma_alani"]) ? htmlspecialchars($_POST["calisma_alani"]) : "Çalışma alanı seçilmedi.";
+$konu = isset($_POST["konu"]) ? htmlspecialchars($_POST["konu"]) : "Konu belirtilmedi.";
+$mesaj = isset($_POST["mesaj"]) ? htmlspecialchars($_POST["mesaj"]) : "Mesaj gönderilmedi.";
 ?>
 <!DOCTYPE html>
 <html>
@@ -57,7 +58,7 @@ $tel_no = isset($_POST["tel_no"]) ? htmlspecialchars($_POST["tel_no"]): 'Telefon
         <li class="nav-item"><a href="ilgi-alanlarim.html" class="nav-link bg-secondary active">İlgi Alanlarım</a></li>
       </ul>
       <ul class="nav nav-pills fix-margin-right-10">
-        <li class="nav-item fix-margin-right-5"><a href="contact.html" class="nav-link active bg-success">İletişim</a></li>
+        <li class="nav-item fix-margin-right-5"><a href="contact.php" class="nav-link active bg-success">İletişim</a></li>
         <li class="nav-item"><a href="login.html" class="nav-link active bg-success">Giriş Yap</a></li>
       </ul>
     </nav>
@@ -68,12 +69,12 @@ $tel_no = isset($_POST["tel_no"]) ? htmlspecialchars($_POST["tel_no"]): 'Telefon
         <tr><td>Soyadınız: </td><td><?php echo $isim_soyad;?></td></tr>
         <tr><td>E-Posta Adresiniz:  </td><td><?php echo $email;?></td></tr>
         <tr><td>Telefon Numaranız: </td><td><?php echo $tel_no;?></td></tr>
- <!--       <tr><td>Eğitim Seviyeniz</td><td><?php //echo $egitim;?></td></tr>
-        <tr><td>Üniversiteniz: </td><td><?php //echo $universite;?></td></tr>
-        <tr><td>İlgi Alanlarınız: </td><td><?php //echo $ilgi_alanlari;?></td></tr>
-        <tr><td>Çalışma Alanınız</td><td><?php //echo $calisma_alani;?></td></tr>
-        <tr><td>Mesajınızın Konusu: </td><td><?php //echo $konu;?></td></tr>
-        <tr><td>Mesajınız: </td><td><?php //echo $mesaj;?></td></tr>-->
+        <tr><td>Eğitim Seviyeniz</td><td><?php echo $egitim;?></td></tr>
+        <tr><td>Üniversiteniz: </td><td><?php echo $universite;?></td></tr>
+        <tr><td>İlgi Alanlarınız: </td><td><?php echo $ilgi_alanlari;?></td></tr>
+        <tr><td>Çalışma Alanınız</td><td><?php echo $calisma_alani;?></td></tr>
+        <tr><td>Mesajınızın Konusu: </td><td><?php echo $konu;?></td></tr>
+        <tr><td>Mesajınız: </td><td><?php echo $mesaj;?></td></tr>
       </table>
       <a href="contact.html" class="btn btn-light mt-4 text-dark">Geri Dön</a>
     </div> 

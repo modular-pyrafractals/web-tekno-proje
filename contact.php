@@ -1,3 +1,10 @@
+<?php
+session_start();
+if (empty($_SESSION['csrf_token'])) {
+  $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+}
+?>
+
 <!DOCTYPE html>
 <html>
   <head>
@@ -27,12 +34,13 @@
         <li class="nav-item"><a href="ilgi-alanlarim.html" class="nav-link bg-secondary active">İlgi Alanlarım</a></li>
       </ul>
       <ul class="nav nav-pills fix-margin-right-10">
-        <li class="nav-item fix-margin-right-5"><a href="contact.html" class="nav-link active bg-success">İletişim</a></li>
+        <li class="nav-item fix-margin-right-5"><a href="contact.php" class="nav-link active bg-success">İletişim</a></li>
         <li class="nav-item"><a href="login.html" class="nav-link active bg-success">Giriş Yap</a></li>
       </ul>
     </nav>
     <div id="app" class="container py-5">
     <h1 class="mb-4">İletişim Formu</h1>
+    <hr>
     <form id="contactForm" @submit.prevent="checkForm" method="post" action="process.php" ref="formRef">
       <div class="row">
         <div class="col-md-6 mb-3">
@@ -54,7 +62,8 @@
         <label for="tel_no">Telefon Numaranız</label>
         <input type="text" id="tel_no" name="tel_no" class="form-control" v-model="tel_no" placeholder="550xxxxxxx">
         <div v-if="!isPhoneValid" class="text-danger mt-1">Geçerli bir telefon numarası giriniz.</div>
-      </div> 
+      </div>
+      <hr>
       <div class="mb-3">
         <label class="form-label d-block mb-2">Eğitim Seviyeniz</label>
         <div class="form-check form-check-inline">
@@ -81,10 +90,91 @@
           <input class="form-check-input" type="radio" id="egitimMezun" name="egitim" value="Mezun" checked>
           <label class="form-check-label" for="egitimMezun">Mezun</label>
         </div>
-      </div>        
+      </div>
+      <div class="mb-3">
+        <label for="universite" class="form-label">Üniversiteniz</label>
+        <input type="text" id="universite" name="universite" list="universiteler" class="form-control" v-model="universite">
+        <datalist id="universiteler">
+          <option value="Üniversiteye Girmedim">Üniversiteye Girmedim</option>
+          <option value="SAÜ">Sakarya Üniversitesi</option>
+          <option value="ODTÜ">ODTÜ</option>
+          <option value="Boğaziçi Üniversitesi">Boğaziçiç Üniversitesi</option>
+          <option value="İTÜ">İTÜ</option>
+          <option value="Haccettepe Üniversitesi">Haccettepe Üniversitesi</option>
+          <option value="Ankara Üniversitesi"></option>
+        </datalist>
+        <div v-if="!isUniversityValid" class="text-danger mt-1">Geçerli bir yanıt giriniz.</div>
+      </div>
+      <hr>
+      <div class="mb-3">
+        <label class="form-label d-block mb-2">İlgi Alanlarınız</label>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="checkbox" id="ilgiSiber" name="ilgi_alanlari[]" value="Siber Güvenlik">
+          <label class="form-check-label" for="ilgiSiber">Siber Güvenlik</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="checkbox" id="ilgiFront" name="ilgi_alanlari[]" value="Front End Coding">
+          <label class="form-check-label" for="ilgiFront">Front End Coding</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="checkbox" id="ilgiBack" name="ilgi_alanlari[]" value="Back End Coding">
+          <label class="form-check-label" for="ilgiBack">Back End Coding</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="checkbox" id="ilgiCTI" name="ilgi_alanlari[]" value="Siber Tehdit İstihbaratı">
+          <label class="form-check-label" for="ilgiCTI">Siber Tehdit İstihbaratı</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="checkbox" id="ilgiAI" name="ilgi_alanlari[]" value="Yapay Zeka">
+          <label class="form-check-label" for="ilgiAI">Yapay Zeka</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="checkbox" id="ilgiMLOps" name="ilgi_alanlari[]" value="MLOps">
+          <label class="form-check-label" for="ilgiMLOps">MLOps</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="checkbox" id="ilgiDevOps" name="ilgi_alanlari[]" value="DevOps">
+          <label class="form-check-label" for="ilgiDevOps">DevOps</label>
+        </div>
+      </div>
+      <div class="mb-3">
+        <label for="calisma_alani" class="form-label">Çalışma Alanınız</label>
+        <select id="calisma_alani" name="calisma_alani" class="form-select">
+          <option selected value="">Alan seçilmedi</option>
+          <optgroup label="Siber">
+            <option value="Red Team">Red Team</option>
+            <option value="BlueTeam">Blue Team</option>
+            <option value="DevOps">DevOps</option>
+            <option value="Siber Tehdit İstihbaratı">Siber Tehdit İstihbaratı</option>
+          </optgroup>
+          <optgroup label="Sayısal">
+            <option value="Bilgisayar Mühendisliği">Bilgisayar Mühendisliği</option>
+            <option value="Elektrik-Elektronik Mühendisliği">Elektrik-Elektronik Mühendisliği</option>
+            <option value="Makina Mühendisliği">Makina Mühendisliği</option>
+          </optgroup>
+          <optgroup label="Sözel">
+            <option value="Ekonomi ve Finans">Ekonomi ve Finans</option>
+            <option value="Sağlık">Sağlık Endüstrisi</option>
+          </optgroup>
+        </select>
+      </div>
+      <hr>
+      <div class="mb-3">
+        <label for="konu" class="form-label">Mesajınızın Konusu</label>
+        <input type="text" id="konu" name="konu" class="form-control" v-model="konu">
+        <div v-if="!isKonuValid" class="text-danger mt-1">Geçerli bir mesaj konusu giriniz.</div>
+      </div>
+      <div class="mb-3">
+        <label for="mesaj" class="form-label">Mesajınız</label>
+        <textarea id="mesaj" name="mesaj" class="form-control" rows="5" v-model="mesaj"></textarea>
+        <div v-if="!isMesajValid" class="text-danger mt-1">Mesaj boş bırakılamaz.</div>
+      </div>  
+      <hr>
 
       <div class="alert alert-danger" v-if="errorMessage">{{ errorMessage }}</div>
       <div class="alert alert-success" v-if="responseMessage">{{ responseMessage }}</div>
+      
+      <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">
 
       <div class="d-flex gap-3">
         <input type="reset" value="Temizle">
@@ -99,13 +189,19 @@
       const soyadInput = document.getElementById('isim_soyad');
       const emailInput = document.getElementById('email');
       const phoneInput = document.getElementById('tel_no');
-  
+      const uniInput = document.getElementById('universite');
+      const konuInput = document.getElementById('konu');
+      const mesajInput = document.getElementById('mesaj');
+
       let isValid = true;
     
       adInput.classList.remove('is-invalid');
       soyadInput.classList.remove('is-invalid');
       emailInput.classList.remove('is-invalid');
       phoneInput.classList.remove('is-invalid');
+      uniInput.classList.remove('is-invalid');
+      konuInput.classList.remove('is-invalid');
+      mesajInput.classList.remove('is-invalid');
     
       if (adInput.value.trim() === '') {
         adInput.classList.add('is-invalid');
@@ -129,6 +225,21 @@
         isValid = false;
       }
 
+      if (uniInput.value.trim() === '') {
+        uniInput.classList.add('is-invalid');
+        isValid = false;
+      }
+
+      if (konuInput.value.trim() === '') {
+        konuInput.classList.add('is-invalid');
+        isValid = false;
+      }
+
+      if (mesajInput.value.trim() === '') {
+        mesajInput.classList.add('is-invalid');
+        isValid = false;
+      }
+
       if (!isValid) {
         alert('Bazı alanlar hatalı. Lütfen kontrol edin.');
       } else {
@@ -145,9 +256,15 @@
         const isim_soyad = ref('');
         const email = ref('');
         const tel_no = ref('');
+        const universite = ref('');
+        const konu = ref('');
+        const mesaj = ref('');
         const isNameValid = ref(true);
         const isEmailValid = ref(true);
         const isPhoneValid = ref(true);
+        const isUniversityValid = ref(true);
+        const isKonuValid = ref(true);
+        const isMesajValid = ref(true);
         const errorMessage = ref('');
         const responseMessage = ref('');
         const formRef = ref(null);
@@ -165,13 +282,28 @@
           const phoneRegex = /^[0-9]{10}$/;
           isPhoneValid.value = phoneRegex.test(tel_no.value);
         };
+
+        const validateUniversity = () => {
+          isUniversityValid.value = universite.value.trim().length > 0;
+        };
+
+        const validateKonu = () => {
+          isKonuValid.value = konu.value.trim().length > 0;
+        };
  
+        const validateMesaj = () => {
+          isMesajValid.value = mesaj.value.trim().length > 0;
+        };
+
         const checkForm = () => {
           validateName();
           validateEmail();
           validatePhone();
+          validateUniversity();
+          validateKonu();
+          validateMesaj();
 
-          if (!isNameValid.value || !isEmailValid.value || !isPhoneValid.value) {
+          if (!isNameValid.value || !isEmailValid.value || !isPhoneValid.value || !isUniversityValid.value || !isKonuValid.value || !isMesajValid.value) {
             errorMessage.value = 'Geçersiz alanlar mevcut. Lütfen tekrar kontrol edin.';
             responseMessage.value = '';
             return;
@@ -188,9 +320,15 @@
           isim_soyad,
           email,
           tel_no,
+          universite,
+          konu,
+          mesaj,
           isNameValid,
           isEmailValid,
           isPhoneValid,
+          isUniversityValid,
+          isKonuValid,
+          isMesajValid,
           errorMessage,
           responseMessage,
           checkForm,
