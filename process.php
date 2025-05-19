@@ -13,8 +13,8 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 $isim_ad = isset($_POST["isim_ad"]) ? htmlspecialchars($_POST["isim_ad"]) : 'Ad girilmedi.';
 $isim_soyad = isset($_POST["isim_soyad"]) ? htmlspecialchars($_POST["isim_soyad"]) : 'Soyad girilmedi.';
 $email = isset($_POST["email"]) ? htmlspecialchars($_POST["email"]) : 'Email girilmedi.';
-    /*$tel_no = isset($_POST["tel_no"]) ? htmlspecialchars($_POST["tel_no"]): 'Telefon numarası girilmedi.';
-    $egitim = isset($_POST["egitim"]) ? htmlspecialchars($_POST["egitim"]): 'Eğitim seviyesi girilmedi.';
+$tel_no = isset($_POST["tel_no"]) ? htmlspecialchars($_POST["tel_no"]): 'Telefon numarası girilmedi.';
+/*    $egitim = isset($_POST["egitim"]) ? htmlspecialchars($_POST["egitim"]): 'Eğitim seviyesi girilmedi.';
     $universite = isset($_POST["universite"]) ? htmlspecialchars($_POST["universite"]) : 'Üniversite adı girilmedi.';
     $konu = isset($_POST["konu"]) ? htmlspecialchars($_POST["konu"]) : "Konu belirtilmedi.";
     $mesaj = isset($_POST["mesaj"]) ? htmlspecialchars($_POST["mesaj"]) : "Mesaj gönderilmedi.";
@@ -67,8 +67,8 @@ $email = isset($_POST["email"]) ? htmlspecialchars($_POST["email"]) : 'Email gir
         <tr><td>Adınız: </td><td><?php echo $isim_ad; ?></td></tr>
         <tr><td>Soyadınız: </td><td><?php echo $isim_soyad;?></td></tr>
         <tr><td>E-Posta Adresiniz:  </td><td><?php echo $email;?></td></tr>
-  <!--      <tr><td>Telefon Numaranız: </td><td><?php //echo $tel_no;?></td></tr>
-        <tr><td>Eğitim Seviyeniz</td><td><?php //echo $egitim;?></td></tr>
+        <tr><td>Telefon Numaranız: </td><td><?php echo $tel_no;?></td></tr>
+ <!--       <tr><td>Eğitim Seviyeniz</td><td><?php //echo $egitim;?></td></tr>
         <tr><td>Üniversiteniz: </td><td><?php //echo $universite;?></td></tr>
         <tr><td>İlgi Alanlarınız: </td><td><?php //echo $ilgi_alanlari;?></td></tr>
         <tr><td>Çalışma Alanınız</td><td><?php //echo $calisma_alani;?></td></tr>

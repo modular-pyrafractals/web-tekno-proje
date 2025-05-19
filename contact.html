@@ -34,67 +34,108 @@
     <div id="app" class="container py-5">
     <h1 class="mb-4">İletişim Formu</h1>
     <form id="contactForm" @submit.prevent="checkForm" method="post" action="process.php" ref="formRef">
-      <div class="mb-3">
-        <label for="isim_ad" class="form-label">Ad</label>
-        <input type="text" id="isim_ad" name="isim_ad" class="form-control" v-model="isim_ad">
+      <div class="row">
+        <div class="col-md-6 mb-3">
+          <label for="isim_ad" class="form-label">Adınız</label>
+          <input type="text" id="isim_ad" name="isim_ad" class="form-control" v-model="isim_ad">
+        </div>
+        <div class="col-md-6 mb-3">
+          <label for="isim_soyad" class="form-label">Soyadınız</label>
+          <input type="text" id="isim_soyad" name="isim_soyad" class="form-control" v-model="isim_soyad">
+        </div>
         <div v-if="!isNameValid" class="text-danger mt-1">İsim boş bırakılamaz.</div>
       </div>
       <div class="mb-3">
-        <label for="isim_soyad" class="form-label">Soyad</label>
-        <input type="text" id="isim_soyad" name="isim_soyad" class="form-control" v-model="isim_soyad">
-        <div v-if="!isNameValid" class="text-danger mt-1">İsim boş bırakılamaz.</div>
-      </div>
-      <div class="mb-3">
-        <label for="email" class="form-label">E-posta</label>
+        <label for="email" class="form-label">E-postanız</label>
         <input type="text" id="email" name="email" class="form-control" v-model="email">
         <div v-if="!isEmailValid" class="text-danger mt-1">Geçerli bir e-posta giriniz.</div>
       </div>
+      <div class="mb-3">
+        <label for="tel_no">Telefon Numaranız</label>
+        <input type="text" id="tel_no" name="tel_no" class="form-control" v-model="tel_no" placeholder="550xxxxxxx">
+        <div v-if="!isPhoneValid" class="text-danger mt-1">Geçerli bir telefon numarası giriniz.</div>
+      </div> 
+      <div class="mb-3">
+        <label class="form-label d-block mb-2">Eğitim Seviyeniz</label>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="radio" name="egitim" id="egitimLise" value="Lise">
+          <label class="form-check-label" for="egitimLise">Lise</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="radio" name="egitim" id="egitimOnlisans" value="Önlisans">
+          <label class="form-check-label" for="egitimOnlisans">Önlisans</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="radio" name="egitim" id="egitimLisans" value="Lisans">
+          <label class="form-check-label" for="egitimLisans">Lisans</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="radio" name="egitim" id="egitimYuksek" value="Yüksek Lisans">
+          <label class="form-check-label" for="egitimYuksek">Yüksek Lisans</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="radio" name="egitim" id="egitimDoktora" value="Doktora">
+          <label class="form-check-label" for="egitimDoktora">Doktora</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="radio" id="egitimMezun" name="egitim" value="Mezun" checked>
+          <label class="form-check-label" for="egitimMezun">Mezun</label>
+        </div>
+      </div>        
 
       <div class="alert alert-danger" v-if="errorMessage">{{ errorMessage }}</div>
       <div class="alert alert-success" v-if="responseMessage">{{ responseMessage }}</div>
 
       <div class="d-flex gap-3">
         <input type="reset" value="Temizle">
-        <button type="submit" class="btn btn-info" onclick="validateFormJS()">JS Kontrol</button>
+        <button type="button" class="btn btn-info" onclick="validateFormJS()">JS Kontrol</button>
         <button type="submit" class="btn btn-success" @click="checkForm">Vue Gönder</button>
       </div>
     </form>
   </div>
   <script>
-function validateFormJS() {
-  const adInput = document.getElementById('isim_ad');
-  const soyadInput = document.getElementById('isim_soyad');
-  const emailInput = document.getElementById('email');
-
-  let isValid = true;
-
-  adInput.classList.remove('is-invalid');
-  soyadInput.classList.remove('is-invalid');
-  emailInput.classList.remove('is-invalid');
-
-  if (adInput.value.trim() === '') {
-    adInput.classList.add('is-invalid');
-    isValid = false;
-  }
+    function validateFormJS() {
+      const adInput = document.getElementById('isim_ad');
+      const soyadInput = document.getElementById('isim_soyad');
+      const emailInput = document.getElementById('email');
+      const phoneInput = document.getElementById('tel_no');
   
-  if (soyadInput.value.trim() === '') {
-    soyadInput.classList.add('is-invalid');
-    isValid = false;
-  }
+      let isValid = true;
+    
+      adInput.classList.remove('is-invalid');
+      soyadInput.classList.remove('is-invalid');
+      emailInput.classList.remove('is-invalid');
+      phoneInput.classList.remove('is-invalid');
+    
+      if (adInput.value.trim() === '') {
+        adInput.classList.add('is-invalid');
+        isValid = false;
+      }
 
-  const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-  if (!emailRegex.test(emailInput.value.trim())) {
-    emailInput.classList.add('is-invalid');
-    isValid = false;
-  }
+      if (soyadInput.value.trim() === '') {
+        soyadInput.classList.add('is-invalid');
+        isValid = false;
+      }
 
-  if (!isValid) {
-    alert('Bazı alanlar hatalı. Lütfen kontrol edin.');
-  } else {
-    alert('Form JS ile başarılı şekilde doğrulandı.');
-  }
-}
-</script>
+      const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+      if (!emailRegex.test(emailInput.value.trim())) {
+        emailInput.classList.add('is-invalid');
+        isValid = false;
+      }
+
+      const phoneRegex = /^[0-9]{10}$/;
+      if(!phoneRegex.test(phoneInput.value.trim())) {
+        phoneInput.classList.add('is-invalid');
+        isValid = false;
+      }
+
+      if (!isValid) {
+        alert('Bazı alanlar hatalı. Lütfen kontrol edin.');
+      } else {
+        alert('Form JS ile başarılı şekilde doğrulandı.');
+      }
+    }
+  </script>
   <script>
     const { createApp, ref } = Vue;
 
@@ -103,8 +144,10 @@ function validateFormJS() {
         const isim_ad = ref('');
         const isim_soyad = ref('');
         const email = ref('');
+        const tel_no = ref('');
         const isNameValid = ref(true);
         const isEmailValid = ref(true);
+        const isPhoneValid = ref(true);
         const errorMessage = ref('');
         const responseMessage = ref('');
         const formRef = ref(null);
@@ -118,11 +161,17 @@ function validateFormJS() {
           isNameValid.value = (isim_ad.value.trim().length > 0) && (isim_soyad.value.trim().length > 0);
         };
 
+        const validatePhone = () => {
+          const phoneRegex = /^[0-9]{10}$/;
+          isPhoneValid.value = phoneRegex.test(tel_no.value);
+        };
+ 
         const checkForm = () => {
           validateName();
           validateEmail();
+          validatePhone();
 
-          if (!isNameValid.value || !isEmailValid.value) {
+          if (!isNameValid.value || !isEmailValid.value || !isPhoneValid.value) {
             errorMessage.value = 'Geçersiz alanlar mevcut. Lütfen tekrar kontrol edin.';
             responseMessage.value = '';
             return;
@@ -138,8 +187,10 @@ function validateFormJS() {
           isim_ad,
           isim_soyad,
           email,
+          tel_no,
           isNameValid,
           isEmailValid,
+          isPhoneValid,
           errorMessage,
           responseMessage,
           checkForm,
