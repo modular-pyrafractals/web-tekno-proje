@@ -9,8 +9,7 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 if (!isset($_POST['csrf_token']) || !hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])) {
   http_response_code(403);
   die("CSRF doğrulama hatası.");
-  error_log("CSRF doğrulama hatası.");
-}
+  error_log("Missing or misconfigured CSRF token from IP: " . $_SERVER['REMOTE_ADDR']);
 }
 
 $isim_ad = isset($_POST["isim_ad"]) ? htmlspecialchars($_POST["isim_ad"]) : 'Ad girilmedi.';
