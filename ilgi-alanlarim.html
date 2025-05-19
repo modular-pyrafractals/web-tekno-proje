@@ -14,7 +14,7 @@
       <div class="container d-flex flex-wrap align-items-center justify-content-center">
         <a href="index.html" class="d-flex align-middle mb-3 mb-lg-0 text-white text-decoration-none">
           <img src="/assets/images/favicon.svg" alt="favicon" width="32" height="32">
-          <span class="fs-4 align-top fix-margin-left-5"> Testing</span>
+          <span class="fs-4 align-top fix-margin-left-5">Pyrafractals</span>
         </a>
       </div>
     </header>
@@ -31,7 +31,273 @@
         <li class="nav-item"><a href="login.html" class="nav-link active bg-success">Giriş Yap</a></li>
       </ul>
     </nav>
-    <h1>İlgi alanlarım</h1>
-    <p>İlgi alanlarım çerçevesinde internetten bulduğum ücretsiz bir API servisinden veri alıp göster (Döviz API'si geçerli değil)</p>
+    <h1 class="my-4 mx-2">OpenTriviaDB API ile Kısa Test</h1>
+    <p class="mb-4 mx-3">Bir API ile etkileşim yapıp kullanıcıya quiz şeklinde sormak ilgimi çekti, bu yüzden Vue.JS ve OpenTriviaDB API'sını kullanarak böyle bir sayfa yaptım.</p>
+    <hr>
+    <div id="app" class="container py-4">
+      <div v-if="isConfigInProgress">
+        <h2 class="mb-4">Kısa Test Config Paneli</h2>
+        <div class="mb-3">
+          <label for="config_soru_sayisi" class="form-label">Soru Sayısı</label>
+          <input type="number" id="config_soru_sayisi" name="config_soru_sayisi" class="form-control" v-model="config_soru_sayisi" min="1">
+          <div v-if="!isSoruSayisiValid" class="text-danger mt-1">Geçerli soru sayısı giriniz.</div>
+        </div>
+        <div class="mb-3">
+          <label for="config_kategori" class="form-label">Soru Kategorisi</label>
+          <select id="config_kategori" name="config_kategori" class="form-select" v-model="config_kategori">
+            <option value="any">Hepsi</option>
+            <optgroup label="Eğlence">
+              <option value="10">Kitaplar</option>
+              <option value="11">Filmler</option>
+              <option value="15">Oyunlar</option>
+            </optgroup>
+            <optgroup label="Bilim">
+              <option value="17">Bilim ve Doğa</option>
+              <option value="18">Bilgisayarlar</option>
+            </optgroup>
+          </select>
+        </div>
+        <div class="mb-3">
+          <label for="config_zorluk">Soru Zorluğu</label>
+          <select id="config_zorluk" name="config_zorluk" class="form-select" v-model="config_zorluk">
+            <option value="any">Hepsi</option>
+            <option value="easy">Kolay</option>
+            <option value="medium">Orta</option>
+            <option value="hard">Zor</option>
+          </select>
+        </div>
+        <div class="mb-3">
+          <label for="config_soru_tipi">Soru Tipi</label>
+          <select id="config_soru_tipi" name="config_soru_tipi" class="form-select" v-model="config_soru_tipi">
+            <option value="any">Hepsi</option>
+            <option value="multiple">Çoktan Seçmeli</option>
+            <option value="boolean">Doğru/Yanlış</option>
+          </select>
+        </div>
+        <div v-if="errorMessage" class="alert alert-danger mt-3">{{ errorMessage }}</div>
+        <button type="button" class="btn btn-success" @click="checkConfig">Seç</button>
+      </div>
+      <div v-if="!isConfigInProgress">
+        <div class="card bg-dark text-white mb-4">
+          <div class="card-body">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+              <div>
+                <strong>Kısa Test Başladı:  </strong>
+              </div>
+              <button class="btn btn-light btn-sm" @click="resetConfig">
+                Geri Dön
+              </button>
+            </div>
+            <div class="d-flex justify-content-between align-items-center mb-3">
+              <div>
+                <span>Soru {{ soru_index + 1 }} / {{ sorular.length }}</span>
+              </div>
+              <span class="ms-3">Puan: {{ skor }}</span>
+            </div>
+            <h5 v-html="decodeHTML(soru_current.question)"></h5>
+            <div class="d-grid gap-2 mt-3">
+              <button
+                v-for="(option, index) in cevaplar_karma"
+                :key="index"
+                class="btn"
+                :class="btnClass(option)"
+                @click="cevapSec(option)"
+                :disabled="isAnswerSelected"
+              >
+                {{ decodeHTML(option) }}
+              </button>
+            </div>
+            <div v-if="cevap_feedback" class="alert mt-4" :class="feedback_class">
+              {{ cevap_feedback }}
+            </div>
+            <button
+              v-if="isAnswerSelected && soru_index < sorular.length - 1"
+              class="btn btn-light mt-3"
+              @click="sonrakiSoru"
+            >
+              Sonraki Soruya Geç
+            </button>
+            <div v-if="soru_index === sorular.length - 1 && isAnswerSelected" class="mt-4 alert alert-success">
+              Bütün soruları cevapladınız. Skorunuz: {{ skor }}
+            </div>
+          </div>
+        </div>   
+      </div>
+    </div> 
+    <script>
+      const {createApp, ref, computed} = Vue;
+
+      createApp({
+        setup() {
+          const config_soru_sayisi = ref(5); 
+          const config_kategori = ref("any");
+          const config_zorluk = ref("any");
+          const config_soru_tipi = ref("any");
+          const sorular = ref([]);
+          const soru_index = ref(0);
+          const skor = ref(0);
+          const cevap_feedback = ref('');
+          const cevap_selected = ref('');
+          const feedback_class = ref('');
+          const isSoruSayisiValid = ref(true);
+          const isConfigInProgress = ref(true);
+          const isAnswerSelected = ref(false);
+          const first_answer_correct = ref(true);
+          const errorMessage = ref('');
+
+          const soru_current = computed(() => sorular.value[soru_index.value] || {});
+          const cevaplar_karma = computed(() => {
+            const q = soru_current.value;
+            if (!q || !q.type) return [];
+
+            if (q.type === "boolean") {
+              return ["True", "False"];
+            }
+
+            const cevaplar_all = [...soru_current.value.incorrect_answers, soru_current.value.correct_answer];
+            return diziKaristir(cevaplar_all);
+          });
+          
+          const diziKaristir = (dizi) => {
+            return dizi.sort(() => Math.random() - 0.5);
+          };
+          
+          const decodeHTML = (html) => {
+            const txt = document.createElement("textarea");
+            txt.innerHTML = html;
+            return txt.value;
+          };
+
+          const cevapSec = (selected) => {
+            if (isAnswerSelected.value) return;
+
+            const correct = soru_current.value.correct_answer;
+            cevap_selected.value = selected;
+
+            if (selected === correct) {
+              if (first_answer_correct.value === true) {
+                skor.value += 10;
+              }
+              cevap_feedback.value = "Cevabınız doğru!";
+              feedback_class.value = "alert-success";
+            } else {
+              cevap_feedback.value = `Cevabınız yanlış! Doğru cevap: ${decodeHTML(correct)}`;
+              feedback_class.value = "alert-danger";
+              first_answer_correct.value = false;
+            }
+            isAnswerSelected.value = true;
+          };
+
+          const btnClass = (option) => {
+            const correct = soru_current.value.correct_answer;
+            
+            if (!isAnswerSelected.value) {
+              return "btn-outline-light";
+            }
+            if (option === correct) {
+              return "btn-success";
+            } 
+            if (option === cevap_selected.value && option !== correct) {
+              return "btn-danger";
+            }
+
+            return 'btn-outline-light';
+          }
+
+          const sonrakiSoru = () => {
+            first_answer_correct.value = true;
+            soru_index.value++;
+            isAnswerSelected.value = false;
+            cevap_feedback.value = '';
+          };
+
+          const validateSayi = () => {
+            isSoruSayisiValid.value = config_soru_sayisi.value > 0;
+          };
+
+          const generateAPIUrl = () => {
+            let url = `https://opentdb.com/api.php?amount=${config_soru_sayisi.value}`;
+  
+            if (config_kategori.value !== "any") {
+              url += `&category=${config_kategori.value}`;
+            }
+            if (config_zorluk.value !== "any") {
+              url += `&difficulty=${config_zorluk.value}`;
+            }
+            if (config_soru_tipi.value !== "any") {
+              url += `&type=${config_soru_tipi.value}`;
+            }
+
+            return url;
+          };
+
+          const checkConfig = async () => {
+            validateSayi();
+
+            sorular.value = [];
+            soru_index.value = 0;
+            skor.value = 0;
+
+            if (!isSoruSayisiValid.value) {
+              errorMessage.value = 'Geçersiz alanlar mevcut. Lütfen tekrar kontrol edin.';
+              return;
+            } 
+            errorMessage.value = '';
+            
+            const apiURL = generateAPIUrl();
+            console.log("API URL: ", apiURL);
+            
+            try {
+              const response = await fetch(apiURL);
+              const data = await response.json();
+              if (data.response_code === 0) {
+                sorular.value = data.results;
+                console.log("Data.results: ", data.results);
+                isConfigInProgress.value = false;
+              } else {
+                errorMessage.value = "Sorular alınamadı. Lütfen ayarları kontrol edin.";
+              }
+            } catch (err) {
+              errorMessage.value = "API çağrısı başarısız oldu.";
+              console.error(err);
+            }
+
+          };
+
+          const resetConfig = () => {
+            isConfigInProgress.value = true;
+            soru_index.value = 0;
+            skor.value = 0;
+            isAnswerSelected.value = false;
+            cevap_feedback.value = '';
+          };
+
+          return {
+            config_soru_sayisi,
+            config_kategori,
+            config_zorluk,
+            config_soru_tipi,
+            sorular,
+            soru_index,
+            skor,
+            soru_current,
+            cevaplar_karma,
+            cevapSec,
+            sonrakiSoru,
+            cevap_selected,
+            cevap_feedback,
+            isAnswerSelected,
+            feedback_class,
+            resetConfig,
+            decodeHTML,
+            btnClass,
+            isSoruSayisiValid,
+            isConfigInProgress,
+            errorMessage,
+            checkConfig
+          };
+        }
+      }).mount('#app');
+    </script>
   </body>
 </html>
