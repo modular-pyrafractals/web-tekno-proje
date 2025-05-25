@@ -4,7 +4,7 @@
     <title>Şehrim</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT" crossorigin="anonymous">
     <link href="/assets/css/style.css" rel="stylesheet">
     <link rel="icon" type="image/svg+xml" href="/assets/images/favicon.svg">
     <script src="/assets/js/vue.global.js"></script>
@@ -14,7 +14,7 @@
       <div class="container d-flex flex-wrap align-items-center justify-content-center">
         <a href="index.html" class="d-flex align-middle mb-3 mb-lg-0 text-white text-decoration-none">
           <img src="/assets/images/favicon.svg" alt="favicon" width="32" height="32">
-          <span class="fs-4 align-top fix-margin-left-5"> Testing</span>
+          <span class="fs-4 align-top fix-margin-left-5">Pyrafractals</span>
         </a>
       </div>
     </header>
@@ -31,8 +31,81 @@
         <li class="nav-item"><a href="login.html" class="nav-link active bg-success">Giriş Yap</a></li>
       </ul>
     </nav>
-    <hr>
-    <h1>Seçtiğim şehir hakkında bilgiler</h1>
-    <p>En az 4 resimden oluşan slider</p>
+    <main class="container py-5">
+      <div class="text-center mb-5">
+        <h1 class="display-4 text-info border-bottom border-info pb-2">Şehrim</h1>
+      </div>
+      <div class="card bg-dark text-white mb-4">
+        <div class="card-header text-info fs-2">Florida</div>
+        <div class="card-body">
+          <p>Florida, ABD'nin güneydoğusunda yer alan, sıcak iklimi, plajları ve eğlence parklarıyla ünlü bir eyalettir.</p>
+          <p><strong>Lakabı:</strong> Sunshine State</p>
+          <p><strong>Nüfus:</strong> 23.4 milyon (2025)</p>
+          <p><strong>Başkent:</strong> Tallahassee</p>
+          <p><strong>Büyüklük:</strong> 170,312 km<sup>2</sup></p>
+        </div>
+      </div>
+      <div class="card bg-dark text-white mb-4" id="st-augustine">
+        <div class="card-header text-warning fs-5">St. Augustine</div>
+        <div class="card-body">
+          <p>İspanyalılar tarafından 1565'te kurulmuş bu şehir, ABD'de içinde bu güne kadar yaşanılan en eski Avrupalı yerleşimdir. Bu yüzden de "Antik Kent" lakabını kazanmıştır. Tarihle ilgilenenlerin gezmekten zevk alacağı bir şehirdir.</p>
+        </div>
+      </div>
+      <div class="card bg-dark text-white mb-4" id="everglades">
+        <div class="card-header text-warning fs-5">Everglades Ulusal Parkı</div>
+        <div class="card-body">
+          <p>ABD'nin en büyük tropikal vahşi doğa alanıdır. Deniz İneği ve Florida Panteri gibi birçok nadir ve nesli tükenmekte olan birçok türe ev sahipliği yapan eşsiz bir ekosistemi korumaktadır.</p>
+        </div>
+      </div>
+      <div class="card bg-dark text-white mb-4" id="solomon">
+        <div class="card-header text-warning fs-5">Solomon's Castle</div>
+        <div class="card-body">
+          <p>Floridanın orta bölgesinin kırsal kesminde bulunan bu Alüminyum Kale, Howard Solomon tarafından tamamen elle inşa edilmiştir. Kalenin içinde Solomon'un çoğu geri dönüştürülmüş malzemelerle yapılmış sanat eserleri bulunmaktadır.</p>
+        </div>
+      </div>
+      <div class="card bg-dark text-white mb-4" id="florida-man">
+        <div class="card-header text-warning fs-5">Florida Man</div>
+        <div class="card-body">
+          <p>İzlediğiniz videolarda Florida karşınıza çıkarsa "<a href="https://floridaman.com">Florida Man</a>" fenomeninin de karşınıza çıkmaması neredeyse imkansızdır. İnternet dünyasında büyük bir popülerlik kazanmış bu mizah fenomeni, "Florida man drives stolen truck to Space Force base to warn of battle between aliens, dragons" gibi absürd ve çoğunlukla komik olaylar hakkında yapılan haberlerin yaygınlık kazanması ile ortaya çıkmıştır.</p>
+        </div>
+      </div>
+      <div class="row justify-content-center">
+        <div class="col-md-8">
+          <div class="carousel-wrapper">
+            <div id="floridaCarousel" class="carousel slide mb-5" data-bs-ride="carousel">
+              <div class="carousel-inner">
+                <div class="carousel-item active">
+                  <a href="#st-augustine">
+                    <img src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse3.mm.bing.net%2Fth%2Fid%2FOIP.AWSiPBL-y80Bo9JihwatwgHaE7%3Fcb%3Diwc2%26pid%3DApi&f=1&ipt=a01d42688135d865d9313ea062d675921bc2ab8a54b76e25925462349a9428b3&ipo=images" class="d-block w-100 rounded carousel-pics" alt="Miami Beach">
+                  </a>
+                </div>
+                <div class="carousel-item">
+                  <a href="#everglades">
+                    <img src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ffloridatrippers.com%2Fwp-content%2Fuploads%2F2020%2F10%2Fthings-to-do-in-the-everglades-alligators-scaled.jpg&f=1&nofb=1&ipt=60309826460f42eafaf863b6efdbda1a879cfdf9c75a65c3106064a1fe846784" class="d-block w-100 rounded carousel-pics" alt="Everglades">
+                  </a>
+                </div>
+                <div class="carousel-item">
+                  <a href="#solomon">
+                    <img src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%3Fid%3DOIP.AothN2ZxZxdeTgxUf5PE5QHaE9%26cb%3Diwc2%26pid%3DApi&f=1&ipt=00d07f929165d00e1bd2a3de46f69f2d03d956a59eb7ede1e5e1ddf9606f0795&ipo=images" class="d-block w-100 rounded carousel-pics" alt="Solomon's Castle">
+                  </a>
+                </div>
+                <div class="carousel-item">
+                  <a href="#florida-man">
+                    <img src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fmedia.cnn.com%2Fapi%2Fv1%2Fimages%2Fstellar%2Fprod%2F190322135245-20190320-headlines-tear.jpg%3Fq%3Dx_2%2Cy_0%2Ch_898%2Cw_1596%2Cc_crop%2Fh_833%2Cw_1480&f=1&nofb=1&ipt=d6699c97e1a3996d2effc851d99e778c83791773775d5ef191cbdfb20be322e1" class="d-block w-100 rounded carousel-pics" alt="Florida Keys">
+                  </a>
+                </div>
+              </div>
+              <button class="carousel-control-prev" type="button" data-bs-target="#floridaCarousel" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon"></span>
+              </button>
+              <button class="carousel-control-next" type="button" data-bs-target="#floridaCarousel" data-bs-slide="next">
+                <span class="carousel-control-next-icon"></span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js" integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO" crossorigin="anonymous"></script>
   </body>
 </html>

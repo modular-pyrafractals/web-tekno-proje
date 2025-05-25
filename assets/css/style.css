@@ -17,5 +17,36 @@ body.bg-body-dark {
   background-color: #1c1c1c !important;
   color: #eaeaea !important;
 }
-
+#floridaCarousel .carousel-inner .carousel-item .carousel-pics {
+  height: 300px;
+  object-fit: cover;
+}
+.carousel-wrapper {
+  position: relative;
+  padding: 0 4rem;
+}
+.carousel-wrapper .carousel {
+  overflow: visible;
+}
+.carousel-control-prev,
+.carousel-control-next {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(0, 0, 0, 0.3);
+  border: none;
+  z-index: 10;
+  width: 3rem;
+  height: 3rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+}
+.carousel-control-prev {
+  left: -3.5rem;
+}
+.carousel-control-next {
+  right: -3.5rem;
+}
 
