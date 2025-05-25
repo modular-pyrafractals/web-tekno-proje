@@ -39,8 +39,8 @@ if (empty($_SESSION['csrf_token'])) {
       </ul>
     </nav>
     <div id="app" class="container py-5">
-    <h1 class="mb-4">İletişim Formu</h1>
-    <hr>
+    <div class="text-center mb-5">
+      <h1 class="display-4 text-info border-bottom border-info pb-2">İletişim Formu</h1>
     <form id="contactForm" @submit.prevent="checkForm" method="post" action="process.php" ref="formRef">
       <div class="row">
         <div class="col-md-6 mb-3">

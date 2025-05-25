@@ -14,7 +14,7 @@
       <div class="container d-flex flex-wrap align-items-center justify-content-center">
         <a href="index.html" class="d-flex align-middle mb-3 mb-lg-0 text-white text-decoration-none">
           <img src="/assets/images/favicon.svg" alt="favicon" width="32" height="32">
-          <span class="fs-4 align-top fix-margin-left-5"> Testing</span>
+          <span class="fs-4 align-top fix-margin-left-5">Pyrafractals</span>
         </a>
       </div>
     </header>
@@ -31,8 +31,27 @@
         <li class="nav-item"><a href="login.html" class="nav-link active bg-success">Giriş Yap</a></li>
       </ul>
     </nav>
-    <hr>
-    <h1>Login Sayfası</h1>
-    <p>öğrenci numarasına ait kullanıcı adı(ogr_no@uni.adresi gibi) ve şifre (kullanıcı adının domainsiz hali) bir php sayfasına gönderilip kontrol edilmeli. Eğer kontrol işlemi başarılı ise post edilen sayfada <mark>Hoşgeldiniz "ogr_no"</mark> gibi bir mesaj gösterilmeli, başarısız ise kullanıcı login sayfasına geri gönderilmeli. Aynı zamanda login sayfasında kullanıcı adı ve şifre alanlarının boş olmaması ve kullanıcı adının mail adresi olup olmadığı kontrol edilmeli. </p>
+    <main class="container py-5">
+      <div class="text-center mb-5">
+        <h1 class="display-4 text-info border-bottom border-info pb-2">Giriş Yapın</h1>
+      </div>
+      <form id="loginForm" method="post" action="login.php">
+        <div class="row justify-content-center align-items-center">
+          <div class="col-md-8 mb-3">
+            <label for="email" class="form-label">E-postanız</label>
+            <input type="email" id="email" name="email" class="form-control" pattern="^[a-zA-Z][0-9]{9}@sakarya\.edu\.tr$" placeholder="{Öğrenci Numaranız}@sakarya.edu.tr">
+          </div>
+        </div>
+        <div class="row justify-content-center align-items-center mb-3">
+          <div class="col-md-8 mb-3">
+            <label for="password" class="form-label">Şifreniz</label>
+            <input type="text" id="password" name="password" class="form-control" pattern="^[a-zA-Z][0-9]{9}$" placeholder="{Öğrenci Numaranız}">
+          </div>
+        </div>
+        <div class="text-center mb-3">
+          <input type="submit" value="Gönder"class="btn btn-info">
+        </div>
+      </form>
+    </main>
   </body>
 </html>
